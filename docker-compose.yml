@@ -1,0 +1,16 @@
+services:
+  edcwebsite:
+    build: .
+    network_mode: host
+    volumes:
+      # Mount the website directory to persist database changes
+      - ./website/db.sqlite3:/app/website/db.sqlite3
+      # Mount static files
+      - ./website/static:/app/website/static
+      # Mount media files if any
+      - ./website/media:/app/website/media
+    environment:
+      - DEBUG=1
+      - DJANGO_SETTINGS_MODULE=website.settings
+    stdin_open: true
+    tty: true
