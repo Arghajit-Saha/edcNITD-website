@@ -1,4 +1,5 @@
 Django==3.2.16
+gunicorn==21.0
 django-allauth==0.38.0
 django-braces==1.13.0
 django-cors-headers==3.11.0

@@ -23,6 +23,11 @@ python manage.py makemigrations
 echo "Applying migrations..."
 python manage.py migrate
 
-# Start the development server
-echo "Starting Django development server..."
-python manage.py runserver 0.0.0.0:8000
+# Start the Django server
+if [ "$DJANGO_ENV" = "production" ]; then
+  echo "Starting Gunicorn server..."
+  exec gunicorn website.wsgi:application --bind 0.0.0.0:8000 
+else
+  echo "Starting Django development server..."
+  exec python manage.py runserver 0.0.0.0:8000
+fi
