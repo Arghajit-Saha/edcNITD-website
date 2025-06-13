@@ -23,6 +23,10 @@ python manage.py makemigrations
 echo "Applying migrations..."
 python manage.py migrate
 
+# Collect static files
+echo "Collecting static files..."
+python manage.py collectstatic --noinput
+
 # Start the Django server
 if [ "$DJANGO_ENV" = "production" ]; then
   echo "Starting Gunicorn server..."

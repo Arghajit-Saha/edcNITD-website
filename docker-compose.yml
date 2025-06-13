@@ -1,14 +1,30 @@
 services:
-  edcwebsite:
+  django:
     build: .
     network_mode: host
+    container_name: django
     volumes:
       - ./website/db.sqlite3:/app/website/db.sqlite3
-      - ./website/static:/app/website/static
-      - ./website/media:/app/website/media
+      - static_volume:/app/website/staticfiles
+      - media_volume:/app/website/media
     env_file:
       - .env
     environment:
       - DJANGO_SETTINGS_MODULE=website.settings
     stdin_open: true
     tty: true
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    volumes:
+      - static_volume:/app/website/staticfiles
+      - media_volume:/app/website/media
+    network_mode: host
+    depends_on:
+      - django
+
+volumes:
+  static_volume:
+  media_volume:
